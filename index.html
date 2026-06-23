@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dnipro Drive Service — Преміальне СТО Дніпро</title>
+    
+    <!-- Подключаем красивый шрифт и иконки -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Базовые настройки и плавность */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #0d0f12;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Красивый скроллбар */
+        ::-webkit-scrollbar {
+            width: 100px;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d0f12;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff4d00;
+            border-radius: 4px;
+        }
+
+        /* Шапка сайта */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(13, 15, 18, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: #ff4d00;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        nav a:hover {
+            color: #ff4d00;
+        }
+
+        /* Главный экран (Hero) */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+            position: relative;
+            /* Фоновое фото автосервиса высокого качества */
+            background: linear-gradient(90deg, rgba(13,15,18,1) 30%, rgba(13,15,18,0.4) 100%), 
+                        url('https://images.unsplash.com/photo-1616788494707-ec28f08d05a1?auto=format&fit=crop&q=80&w=1920') no-repeat center center/cover;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 span {
+            color: #ff4d00;
+            text-shadow: 0 0 20px rgba(255, 77, 0, 0.4);
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: #a0a5b0;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            background: #ff4d00;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(255, 77, 0, 0.3);
+        }
+
+        .btn:hover {
+            background: #fff;
+            color: #0d0f12;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Секция Услуг с 3D-эффектом */
+        .services {
+            padding: 100px 10%;
+            background: #111418;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 60px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-title span {
+            color: #ff4d00;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            perspective: 1000px; /* Важно для 3D */
+        }
+
+        .service-card {
+            background: #181c22;
+            padding: 40px 30px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            text-align: center;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s;
+            transform-style: preserve-3d;
+        }
+
+        /* 3D анимация при наведении */
+        .service-card:hover {
+            transform: rotateX(7deg) rotateY(-7deg) translateY(-10px);
+            box-shadow: 10px 15px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(ff, 77, 0, 0.1);
+            border-color: #ff4d00;
+        }
+
+        .service-card i {
+            font-size: 45px;
+            color: #ff4d00;
+            margin-bottom: 25px;
+            transition: transform 0.3s;
+            transform: translateZ(30px); /* Выталкивает иконку вперед в 3D */
+        }
+
+        .service-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            transform: translateZ(20px);
+        }
+
+        .service-card p {
+            color: #a0a5b0;
+            font-size: 14px;
+            line-height: 1.5;
+            transform: translateZ(10px);
+        }
+
+        /* Секция Цен / Прайс */
+        .prices {
+            padding: 100px 10%;
+            background: #0d0f12;
+        }
+
+        .price-table {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #181c22;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+
+        .price-item:last-child {
+            border-bottom: none;
+        }
+
+        .price-item:hover {
+            background: rgba(255, 77, 0, 0.05);
+            padding-left: 35px;
+        }
+
+        .price-name {
+            font-weight: 600;
+        }
+
+        .price-cost {
+            color: #ff4d00;
+            font-weight: 800;
+        }
+
+        /* Футер / Контакты */
+        footer {
+            background: #090a0d;
+            padding: 60px 10%;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .footer-info h2 {
+            margin-bottom: 20px;
+        }
+
+        .footer-contacts p {
+            margin-bottom: 15px;
+            color: #a0a5b0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-contacts i {
+            color: #ff4d00;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: #555;
+            font-size: 13px;
+        }
+
+        /* Анимации */
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Адаптивность для мобилок */
+        @media (max-width: 768px) {
+            header { padding: 20px; }
+            nav { display: none; }
+            .hero h1 { font-size: 38px; }
+            .hero { padding: 0 5%; }
+            .footer-content { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Шапка -->
+    <header>
+        <div class="logo">Dnipro<span>Drive</span></div>
+        <nav>
+            <a href="#home">Головна</a>
+            <a href="#services">Послуги</a>
+            <a href="#prices">Ціни</a>
+            <a href="#contacts">Контакти</a>
+        </nav>
+    </header>
+
+    <!-- Главный экран -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Якісний ремонт авто у <span>Дніпрі</span></h1>
+            <p>Професійне обслуговування, сучасне діагностичне обладнання та команда експертів, які знають про машини все. Повернемо твій автомобіль в ідеальний стан.</p>
+            <a href="#services" class="btn">Наші послуги</a>
+        </div>
+    </section>
+
+    <!-- Секция Услуг -->
+    <section class="services" id="services">
+        <h2 class="section-title">Що ми <span>робимо</span></h2>
+        <div class="services-grid">
+            
+            <div class="service-card">
+                <i class="fa-solid :car-burst"></i> <!-- Ошибочная иконка заменена на универсальную -->
+                <i class="fa-solid fa-car-crash"></i> 
+                <h3>Комп'ютерна діагностика</h3>
+                <p>Швидке виявлення помилок та повний аналіз усіх електронних систем автомобіля на дилерському обладнанні.</p>
+            </div>
+
+            <div class="service-card">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <h3>Ремонт двигуна</h3>
+                <p>Капітальний та поточний ремонт ДВЗ будь-якої складності. Гарантія на виконані роботи та запчастини.</p>
+            </div>
+
+            <div class="service-card">
+                <i class="fa-solid fa-oil-can"></i>
+                <h3>ТО та Заміна мастил</h3>
+                <p>Швидке планове технічне обслуговування: заміна моторного мастила, фільтрів та технічних рідин.</p>
+            </div>
+
+            <div class="service-card">
+                <i class="fa-solid fa-gauge-high"></i>
+                <h3>Ремонт ходової</h3>
+                <p>Діагностика підвіски, заміна амортизаторів, сайлентблоків та точне налаштування розвалу-сходження.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Секция Цен -->
+    <section class="prices" id="prices">
+        <h2 class="section-title">Орієнтовна <span>вартість</span></h2>
+        <div class="price-table">
+            <div class="price-item">
+                <div class="price-name">Комп'ютерна діагностика</div>
+                <div class="price-cost">від 400 ₴</div>
+            </div>
+            <div class="price-item">
+                <div class="price-name">Заміна мастила та фільтрів</div>
+                <div class="price-cost">від 500 ₴</div>
+            </div>
+            <div class="price-item">
+                <div class="price-name">Діагностика підвіски</div>
+                <div class="price-cost">безкоштовно *</div>
+            </div>
+            <div class="price-item">
+                <div class="price-name">Заміна гальмівних колодок</div>
+                <div class="price-cost">від 450 ₴</div>
+            </div>
+            <div class="price-item">
+                <div class="price-name">Ремонт генератора</div>
+                <div class="price-cost">від 800 ₴</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер / Контакты -->
+    <footer id="contacts">
+        <div class="footer-content">
+            <div class="footer-info">
+                <div class="logo">Dnipro<span>Drive</span></div>
+                <p style="color: #a0a5b0; max-width: 300px; margin-top: 15px; font-size: 14px;">Твій надійний автосервіс на правому та лівому березі Дніпра.</p>
+            </div>
+            <div class="footer-contacts">
+                <h2>Контакти</h2>
+                <p><i class="fa-solid fa-location-dot"></i> м. Дніпро, вул. Набережна Перемоги, 42</p>
+                <p><i class="fa-solid fa-phone"></i> +38 (067) 123-45-67</p>
+                <p><i class="fa-solid fa-clock"></i> Пн-Сб: 09:00 - 19:00 (Нд - вихідний)</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Dnipro Drive Service. Всі права захищені. Макет створено для демонстрації.
+        </div>
+    </footer>
+
+</body>
+</html>
